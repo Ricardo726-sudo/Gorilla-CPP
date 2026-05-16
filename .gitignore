@@ -3,6 +3,8 @@
 *.o
 *.obj
 *.out
+*.pdf
+*.odt
 # Directorios de configuración de VS Code y Compiladores
 .vscode/
 build/
