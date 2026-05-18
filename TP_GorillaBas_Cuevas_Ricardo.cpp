@@ -1,9 +1,3 @@
-/*
-Autor : Ricardo Cuevas
-Curso 2do año
-tema : Reintepretacion de gorilla.bass
-*/
-
 #include <iostream>   // cin, cout
 #include <string>     // string
 #include <vector>     // vector
@@ -26,9 +20,9 @@ const int SUELO_Y = 26;
 const double PI = 3.141592653589793;
 
 // Constantes de fisica. Se pueden modificar para cambiar la dificultad.
-const double GRAVEDAD = 20.0;
+const double GRAVEDAD = 9.8;
 const double PASO_TIEMPO = 0.10;
-const double ESCALA_MOVIMIENTO = 0.50;
+const double ESCALA_MOVIMIENTO = 0.18;
 
 // Medidas del dibujo del mono.
 const int ANCHO_MONO = 11;
@@ -397,7 +391,7 @@ void jugarPartida() {
     Jugador jugador2("Jugador 2");
     HistorialDisparos historial;
 
-    const int PUNTOS_PARA_GANAR = 3;
+    const int PUNTOS_PARA_GANAR = 2;
     int turno = 1;
 
     vector<Edificio> edificios = generarEdificios();
@@ -426,7 +420,7 @@ void jugarPartida() {
         cambiarColor(7);
 
         double angulo = leerAnguloConMouse(*tirador, *objetivo);
-        double velocidad = leerDouble("Ingresa velocidad entre 5 y 400: ", 5, 400);
+        double velocidad = leerDouble("Ingresa velocidad entre 10 y 120: ", 10, 120);
 
         bool impacto = simularDisparo(*tirador, *objetivo, edificios, angulo, velocidad, viento);
 
@@ -442,7 +436,7 @@ void jugarPartida() {
 
         if (impacto) {
             cambiarColor(10);
-            cout << "Directo!" << tirador->obtenerNombre() << " Ahora tienes" << tirador->obtenerPuntos()<<"Puntos "<< endl;
+            cout << "Impacto! " << tirador->obtenerNombre() << " gana un punto.               " << endl;
             tirador->sumarPunto();
             Beep(850, 180);
             Beep(1150, 220);
@@ -483,14 +477,14 @@ void jugarPartida() {
 
 vector<Edificio> generarEdificios() {
     vector<Edificio> edificios;
-    const int cantidadEdificios = 15;
+    const int cantidadEdificios = 10;
     const int anchoEdificio = ANCHO_PANTALLA / cantidadEdificios;
 
     for (int i = 0; i < cantidadEdificios; i++) {
         Edificio edificio;
         edificio.x = i * anchoEdificio;
-        edificio.ancho = numeroAleatorio(anchoEdificio - 2, anchoEdificio + 2);
-        edificio.alto = numeroAleatorio(3, 22);
+        edificio.ancho = anchoEdificio;
+        edificio.alto = numeroAleatorio(6, 16);
         edificios.push_back(edificio);
     }
 
@@ -532,13 +526,8 @@ void dibujarPanelSuperior(const Jugador& jugador1, const Jugador& jugador2, int 
 
     cambiarColor(7);
     moverCursor(2, 1);
-   if (jugador1.obtenerPuntos() > jugador2.obtenerPuntos()) cambiarColor(10); 
-    cout << jugador1.obtenerNombre() << ": " << jugador1.obtenerPuntos();
-
-    cambiarColor(7); // Color neutral para el espacio
-    cout << "  VS  ";
-    if (jugador2.obtenerPuntos() > jugador1.obtenerPuntos()) cambiarColor(12);
-    cout << jugador2.obtenerNombre() << ": " << jugador2.obtenerPuntos();
+    cout << jugador1.obtenerNombre() << ": " << jugador1.obtenerPuntos()
+         << "      " << jugador2.obtenerNombre() << ": " << jugador2.obtenerPuntos();
 
     moverCursor(55, 1);
     cout << "Viento: ";
@@ -726,7 +715,7 @@ bool simularDisparo(const Jugador& tirador,
 
     for (double tiempo = 0; tiempo < 12; tiempo += PASO_TIEMPO) {
         // El viento se suma a la velocidad horizontal, por eso afecta la curva.
-        double posicionX = inicioX + (velocidadX + viento * 8.0) * tiempo * ESCALA_MOVIMIENTO;
+        double posicionX = inicioX + (velocidadX + viento * 2.0) * tiempo * ESCALA_MOVIMIENTO;
         double posicionY = inicioY - (velocidadY * tiempo - 0.5 * GRAVEDAD * tiempo * tiempo) * ESCALA_MOVIMIENTO;
 
         int pantallaX = static_cast<int>(round(posicionX));
