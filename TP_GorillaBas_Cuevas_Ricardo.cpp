@@ -1,3 +1,10 @@
+/*
+Autor: Ricardo Cuevas
+Fecha: 2024-06-15
+Descripcion: Implementacion de Gorilla.bas en C++ con apuntado con mouse, viento y edificios.    
+*/
+
+
 #include <iostream>   // cin, cout
 #include <string>     // string
 #include <vector>     // vector
