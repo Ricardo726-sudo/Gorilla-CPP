@@ -31,8 +31,8 @@ const double PASO_TIEMPO = 0.10;
 const double ESCALA_MOVIMIENTO = 0.50;
 
 // Medidas del dibujo del mono.
-const int ANCHO_MONO = 11;
-const int ALTO_MONO = 5;
+const int ANCHO_MONO = 13;
+const int ALTO_MONO = 6;
 
 // =========================
 // ESTRUCTURAS Y CLASES
@@ -254,7 +254,7 @@ void Jugador::sumarPunto() {
 // =========================
 
 void configurarConsola() {
-    SetConsoleTitle("Gorilla.bas - version con mouse y viento");
+    SetConsoleTitleA("Gorilla.bas - version con mouse y viento");
     ocultarCursor();
     configurarMouse();
 }
@@ -441,9 +441,11 @@ void jugarPartida() {
         moverCursor(0, ALTO_ESCENARIO + 9);
 
         if (impacto) {
-            cambiarColor(10);
-            cout << "Directo!" << tirador->obtenerNombre() << " Ahora tienes" << tirador->obtenerPuntos()<<"Puntos "<< endl;
             tirador->sumarPunto();
+            cambiarColor(10);
+            cout << "Directo! " << tirador->obtenerNombre()
+                 << " ahora tiene " << tirador->obtenerPuntos()
+                 << " punto(s)." << endl;
             Beep(850, 180);
             Beep(1150, 220);
             pausar(1400);
@@ -594,16 +596,18 @@ void dibujarJugador(const Jugador& jugador, int color) {
     int y = jugador.obtenerY();
 
     cambiarColor(color);
+    moverCursor(x, y - 5);
+    cout << "    .---.    ";
     moverCursor(x, y - 4);
-    cout << "   .---.   ";
+    cout << "   (o   o)   ";
     moverCursor(x, y - 3);
-    cout << "  (o   o)  ";
+    cout << "  /(  ^  )\\  ";
     moverCursor(x, y - 2);
-    cout << "  /|___|\\  ";
+    cout << " /  \\___/  \\ ";
     moverCursor(x, y - 1);
-    cout << "   /| |\\   ";
+    cout << "    /| |\\    ";
     moverCursor(x, y);
-    cout << "  _/   \\_  ";
+    cout << "   _/   \\_   ";
 }
 
 void dibujarLineaApuntado(int inicioX, int inicioY, int destinoX, int destinoY) {
